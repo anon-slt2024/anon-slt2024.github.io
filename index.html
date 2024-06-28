@@ -45,7 +45,7 @@
 					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#abstract">Abstract</a>
 					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#vis2s">Vietnamese</a></li>
 					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#ens2s">English</a></li>
-					
+					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#result">More Result</a></li>
 				</ul>
 			</div>
 		</div>
@@ -79,6 +79,7 @@
                     <p>
                         Voice conversion (VC) models are designed to synthesize speech that preserves the original content but adopts the characteristics of the target speaker. Current methods often struggle to isolate content from the source waveform without preserving speaker-specific details, leading to output are more closely resembles the source speaker than the target speaker. Additionally, training VC models typically requires substantial amounts of audio data with synchronized text and speaker labels, which is a significant limitation, especially for low-resource languages. Furthermore, text-free voice conversion relies on self-supervised features from large-scale speech datasets, which are difficult to obtain in low-resource settings. This paper proposes an end-to-end model that leverages knowledge transfer from high-resource languages like English to low-resource languages and employs domain-adversarial training to disentangle content information from source speech while preventing speaker information leakage without the need for annotated datasets. We also develop a pipeline for constructing datasets applicable to any language for training VC models. Experimental results demonstrate that our model outperforms baseline VC models and exhibits superior robustness, particularly in low-resource language scenarios, while also performing competitively in high-resource settings.
 					</p>
+
                 </div>
 					
 				
@@ -282,6 +283,7 @@
                         </tbody>
                     </table>
 					<hr>
+                    
                     <h3 class="post-meta" id="vis2u">
                         Vietnamese Seen-to-Unseen
                     </h3>
@@ -1652,6 +1654,16 @@
                             
                         </tbody>
                     </table>
+
+                    <!-- <img src="./grid.jpg" alt="grid" style="width:1000px;height:600px;"> -->
+
+                    <td>
+                        
+                    <h3 class="post-meta" id="result">
+                        Grid hyperparameters of loss
+                        <img src="./grid.jpg" alt="grid" style="width:1000px;height:500px;">
+                    </td>
+                    
 
                 </div>
             </div>
