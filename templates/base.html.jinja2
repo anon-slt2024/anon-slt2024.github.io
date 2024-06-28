@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="OlaWod">
+
+    <title>Knowledge Transfer Voice Conversion Demo</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/clean-blog.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="./css/fontawesome.all.min.css">
+	
+	<script defer src="./js/fontawesome.all.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+	<!-- Custom scripts for this template -->
+	<script src="js/clean-blog.js"></script>
+	<script src="js/interp.js"></script>
+
+</head>
+
+<body id="page-top">
+
+	<nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+		<div class="container">
+			<a class="navbar-brand js-scroll-trigger" href="#page-top">Knowledge Transfer Voice Conversion</a>
+			<button class="navbar-toggler navbar-toggler-right font-weight-bold text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#abstract">Abstract</a>
+					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#vis2s">Vietnamese</a></li>
+					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#ens2s">English</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('img/home-bg.jpg')">
+        <div class="container" style="padding-bottom:10px">
+            <div class="row">
+                <div class="col-lg-10 col-md-10 mx-auto">
+                    <div class="site-heading">
+                        <h1>Knowledge Transfer Voice Conversion Demo</h1>
+                        <span class="subheading">
+                            Voice Conversion for Low-Resource Languages Using Knowledge Transfer and Domain-Adversarial Training
+                        </span>
+                    </div>
+                </div>
+            </div>
+			
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-14 col-md-12 mx-auto">
+                <div class="post-preview" id="abstract">
+                    <h2 class="post-title">
+                        Abstract
+                    </h2>
+                    <p>
+                        Voice conversion (VC) models are designed to synthesize speech that preserves the original content but adopts the characteristics of the target speaker. Current methods often struggle to isolate content from the source waveform without preserving speaker-specific details, leading to output are more closely resembles the source speaker than the target speaker. Additionally, training VC models typically requires substantial amounts of audio data with synchronized text and speaker labels, which is a significant limitation, especially for low-resource languages. Furthermore, text-free voice conversion relies on self-supervised features from large-scale speech datasets, which are difficult to obtain in low-resource settings. This paper proposes an end-to-end model that leverages knowledge transfer from high-resource languages like English to low-resource languages and employs domain-adversarial training to disentangle content information from source speech while preventing speaker information leakage without the need for annotated datasets. We also develop a pipeline for constructing datasets applicable to any language for training VC models. Experimental results demonstrate that our model outperforms baseline VC models and exhibits superior robustness, particularly in low-resource language scenarios, while also performing competitively in high-resource settings.
+					</p>
+                </div>
+					
+				
+                <div class="post-preview">
+                    <h2 class="post-title">
+                        Sample
+                    </h2>
+                    <h3 class="post-meta" id="vis2s">
+                        Vietnamese Seen-to-Seen
+                    </h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Source</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for src_basename, tgt_basename, src, tgt, freevc, freevc_sr, freevc_kt_wo_ASR, freevc_kt, freevc_kt_sr, freevc_kt_sr_500_25, freevc_kt_sr_200_10 in vi_s2s_rows%}
+                            <tr>
+                                <td>{{ src_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ src }}">
+                                    </audio>
+                                </td>
+                                <td>{{ tgt_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ tgt }}">
+                                    </audio>
+                                </td>
+                                <td>
+									FreeVC
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc }}">
+                                    </audio> 
+									FreeVC-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_sr }}">
+                                    </audio>
+									+KT-WO-ASR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_wo_ASR }}">
+                                    </audio>
+                                </td>
+                                <td>
+								    +KT
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt }}">
+                                    </audio> 
+									+KT-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr}}">
+                                    </audio>
+									+KT-SR-500-25 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_500_25 }}">
+                                    </audio>
+                                    +KT-SR-200-10 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_200_10 }}">
+                                    </audio>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+					<hr>
+                    <h3 class="post-meta" id="vis2u">
+                        Vietnamese Seen-to-Unseen
+                    </h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Source</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for src_basename, tgt_basename, src, tgt, freevc, freevc_sr, freevc_kt_wo_ASR, freevc_kt, freevc_kt_sr, freevc_kt_sr_500_25, freevc_kt_sr_200_10 in vi_s2u_rows%}
+                            <tr>
+                                <td>{{ src_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ src }}">
+                                    </audio>
+                                </td>
+                                <td>{{ tgt_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ tgt }}">
+                                    </audio>
+                                </td>
+                                <td>
+									FreeVC
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc }}">
+                                    </audio> 
+									FreeVC-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_sr }}">
+                                    </audio>
+									+KT-WO-ASR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_wo_ASR }}">
+                                    </audio>
+                                </td>
+                                <td>
+								    +KT
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt }}">
+                                    </audio> 
+									+KT-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr}}">
+                                    </audio>
+									+KT-SR-500-25 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_500_25 }}">
+                                    </audio>
+                                    +KT-SR-200-10 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_200_10 }}">
+                                    </audio>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+					<hr>
+					<h3 class="post-meta" id="viu2s">
+                        Vietnamese Unseen-to-Seen
+                    </h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Source</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for src_basename, tgt_basename, src, tgt, freevc, freevc_sr, freevc_kt_wo_ASR, freevc_kt, freevc_kt_sr, freevc_kt_sr_500_25, freevc_kt_sr_200_10 in vi_u2s_rows%}
+                            <tr>
+                                <td>{{ src_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ src }}">
+                                    </audio>
+                                </td>
+                                <td>{{ tgt_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ tgt }}">
+                                    </audio>
+                                </td>
+                                                                <td>
+									FreeVC
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc }}">
+                                    </audio> 
+									FreeVC-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_sr }}">
+                                    </audio>
+									+KT-WO-ASR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_wo_ASR }}">
+                                    </audio>
+                                </td>
+                                <td>
+								    +KT
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt }}">
+                                    </audio> 
+									+KT-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr}}">
+                                    </audio>
+									+KT-SR-500-25 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_500_25 }}">
+                                    </audio>
+                                    +KT-SR-200-10 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_200_10 }}">
+                                    </audio>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+					<hr>
+					<h3 class="post-meta" id="viu2u">
+                        Vietnamese Unseen-to-Unseen
+                    </h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Source</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for src_basename, tgt_basename, src, tgt, freevc, freevc_sr, freevc_kt_wo_ASR, freevc_kt, freevc_kt_sr, freevc_kt_sr_500_25, freevc_kt_sr_200_10 in vi_u2u_rows%}
+                            <tr>
+                                <td>{{ src_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ src }}">
+                                    </audio>
+                                </td>
+                                <td>{{ tgt_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ tgt }}">
+                                    </audio>
+                                </td>
+                                                                <td>
+									FreeVC
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc }}">
+                                    </audio> 
+									FreeVC-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_sr }}">
+                                    </audio>
+									+KT-WO-ASR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_wo_ASR }}">
+                                    </audio>
+                                </td>
+                                <td>
+								    +KT
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt }}">
+                                    </audio> 
+									+KT-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr}}">
+                                    </audio>
+									+KT-SR-500-25 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_500_25 }}">
+                                    </audio>
+                                    +KT-SR-200-10 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_200_10 }}">
+                                    </audio>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <h3 class="post-meta" id="ens2s">
+                        English Seen-to-Seen
+                    </h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Source</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for src_basename, tgt_basename, src, tgt, freevc, freevc_sr, freevc_kt_wo_ASR, freevc_kt, freevc_kt_sr, freevc_kt_sr_500_25, freevc_kt_sr_200_10 in en_s2s_rows%}
+                            <tr>
+                                <td>{{ src_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ src }}">
+                                    </audio>
+                                </td>
+                                <td>{{ tgt_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ tgt }}">
+                                    </audio>
+                                </td>
+                                <td>
+									FreeVC
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc }}">
+                                    </audio> 
+									FreeVC-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_sr }}">
+                                    </audio>
+									+KT-WO-ASR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_wo_ASR }}">
+                                    </audio>
+                                </td>
+                                <td>
+								    +KT
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt }}">
+                                    </audio> 
+									+KT-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr}}">
+                                    </audio>
+									+KT-SR-500-25 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_500_25 }}">
+                                    </audio>
+                                    +KT-SR-200-10 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_200_10 }}">
+                                    </audio>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+					<hr>
+                    <h3 class="post-meta" id="ens2u">
+                        English Seen-to-Unseen
+                    </h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Source</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for src_basename, tgt_basename, src, tgt, freevc, freevc_sr, freevc_kt_wo_ASR, freevc_kt, freevc_kt_sr, freevc_kt_sr_500_25, freevc_kt_sr_200_10 in en_s2u_rows%}
+                            <tr>
+                                <td>{{ src_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ src }}">
+                                    </audio>
+                                </td>
+                                <td>{{ tgt_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ tgt }}">
+                                    </audio>
+                                </td>
+                                <td>
+									FreeVC
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc }}">
+                                    </audio> 
+									FreeVC-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_sr }}">
+                                    </audio>
+									+KT-WO-ASR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_wo_ASR }}">
+                                    </audio>
+                                </td>
+                                <td>
+								    +KT
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt }}">
+                                    </audio> 
+									+KT-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr}}">
+                                    </audio>
+									+KT-SR-500-25 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_500_25 }}">
+                                    </audio>
+                                    +KT-SR-200-10 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_200_10 }}">
+                                    </audio>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+					<hr>
+					<h3 class="post-meta" id="enu2s">
+                        English Unseen-to-Seen
+                    </h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Source</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for src_basename, tgt_basename, src, tgt, freevc, freevc_sr, freevc_kt_wo_ASR, freevc_kt, freevc_kt_sr, freevc_kt_sr_500_25, freevc_kt_sr_200_10 in en_u2s_rows%}
+                            <tr>
+                                <td>{{ src_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ src }}">
+                                    </audio>
+                                </td>
+                                <td>{{ tgt_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ tgt }}">
+                                    </audio>
+                                </td>
+                                                                <td>
+									FreeVC
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc }}">
+                                    </audio> 
+									FreeVC-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_sr }}">
+                                    </audio>
+									+KT-WO-ASR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_wo_ASR }}">
+                                    </audio>
+                                </td>
+                                <td>
+								    +KT
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt }}">
+                                    </audio> 
+									+KT-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr}}">
+                                    </audio>
+									+KT-SR-500-25 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_500_25 }}">
+                                    </audio>
+                                    +KT-SR-200-10 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_200_10 }}">
+                                    </audio>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+					<hr>
+					<h3 class="post-meta" id="enu2u">
+                        English Unseen-to-Unseen
+                    </h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Source</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for src_basename, tgt_basename, src, tgt, freevc, freevc_sr, freevc_kt_wo_ASR, freevc_kt, freevc_kt_sr, freevc_kt_sr_500_25, freevc_kt_sr_200_10 in en_u2u_rows%}
+                            <tr>
+                                <td>{{ src_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ src }}">
+                                    </audio>
+                                </td>
+                                <td>{{ tgt_basename }}
+                                    <audio controls preload="none">
+                                        <source src="{{ tgt }}">
+                                    </audio>
+                                </td>
+                                                                <td>
+									FreeVC
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc }}">
+                                    </audio> 
+									FreeVC-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_sr }}">
+                                    </audio>
+									+KT-WO-ASR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_wo_ASR }}">
+                                    </audio>
+                                </td>
+                                <td>
+								    +KT
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt }}">
+                                    </audio> 
+									+KT-SR
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr}}">
+                                    </audio>
+									+KT-SR-500-25 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_500_25 }}">
+                                    </audio>
+                                    +KT-SR-200-10 
+                                    <audio controls preload="none">
+                                        <source src="{{ freevc_kt_sr_200_10 }}">
+                                    </audio>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+		</div>
+
+
+</body>
+
+</html>
